@@ -15,7 +15,7 @@ public class MOTDListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-	@EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onProxyPing(ProxyPingEvent event) {
         // Obtener el MOTD personalizado y configurarlo
         String motd = ChatColor.translateAlternateColorCodes('&', String.join("\n", plugin.getCurrentMotd()));

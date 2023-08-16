@@ -14,7 +14,7 @@ public class MOTDCommand extends Command {
     }
 
     @SuppressWarnings("deprecation")
-	@Override
+    @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("set") && args.length >= 3) {
@@ -23,8 +23,13 @@ public class MOTDCommand extends Command {
                     sender.sendMessage(ChatColor.RED + plugin.getNoPermissionMsg());
                     return;
                 }
-                // Código para actualizar el MOTD, igual que antes
-                // ...
+
+                // Obtener las líneas del MOTD desde los argumentos
+                String line1 = ChatColor.translateAlternateColorCodes('&', args[1]);
+                String line2 = ChatColor.translateAlternateColorCodes('&', args[2]);
+
+                // Actualizar el MOTD en la configuración
+                plugin.updateMotd(line1, line2);
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMotdSetSuccessMsg())); // Enviar mensaje personalizado
             } else if (args[0].equalsIgnoreCase("reload")) {
                 // Verificar el permiso para ejecutar /motd reload
@@ -34,6 +39,8 @@ public class MOTDCommand extends Command {
                 }
                 plugin.loadConfig(); // Vuelve a cargar la configuración en el plugin
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMotdReloadMsg())); // Enviar mensaje personalizado
+            } else if (args[0].equalsIgnoreCase("version")) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getPluginVersionMsg())); // Enviar mensaje de versión
             } else {
                 // Mostrar el uso correcto del comando
                 sender.sendMessage(ChatColor.RED + "Uso:");

@@ -26,6 +26,7 @@ public class TMOTD extends Plugin {
     private String motdSetUsageMsg;
     private String motdReloadMsg;
     private String noPermissionMsg;
+    private String pluginVersionMsg;
     private boolean showPlayerCount;
     private int playerCount;
     private boolean showExtraPlayerCount;
@@ -89,12 +90,13 @@ public class TMOTD extends Plugin {
             motdSetUsageMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("messages.motd_set_usage"));
             motdReloadMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("messages.motd_reload"));
             noPermissionMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("messages.no_permission_msg"));
+            pluginVersionMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("messages.plugin_version_msg"));
 
             // Opciones para personalizar el número de jugadores en la lista de servidores
-            showPlayerCount = configuration.getBoolean("player_count.show_player_count", true);
-            playerCount = configuration.getInt("player_count.player_count", 100);
-            showExtraPlayerCount = configuration.getBoolean("player_count.show_extra_player_count", true);
-            extraPlayerCount = configuration.getInt("player_count.extra_player_count", 0);
+            showPlayerCount = configuration.getBoolean("options.show_player_count", true);
+            playerCount = configuration.getInt("options.player_count", 100);
+            showExtraPlayerCount = configuration.getBoolean("options.show_extra_player_count", true);
+            extraPlayerCount = configuration.getInt("options.extra_player_count", 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -135,6 +137,22 @@ public class TMOTD extends Plugin {
         formatColors(); // Formatea los colores en las líneas del nuevo MOTD
     }
 
+    public void updateMotd(String line1, String line2) {
+        try {
+            Configuration configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config.yml"));
+
+            // Actualizar las líneas del MOTD en la configuración
+            List<String> motdLines = new ArrayList<>();
+            motdLines.add(line1);
+            motdLines.add(line2);
+
+            configuration.set("motds." + "motd" + (currentMotd + 1) + ".lines", motdLines);
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, new File(getDataFolder(), "config.yml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<String> getCurrentMotd() {
         return motdList.get(currentMotd);
     }
@@ -159,6 +177,10 @@ public class TMOTD extends Plugin {
         return noPermissionMsg;
     }
 
+    public String getPluginVersionMsg() {
+        return pluginVersionMsg;
+    }
+
     // Opciones para personalizar el número de jugadores en la lista de servidores
     public boolean isShowPlayerCount() {
         return showPlayerCount;
@@ -176,5 +198,3 @@ public class TMOTD extends Plugin {
         return extraPlayerCount;
     }
 }
-
-       

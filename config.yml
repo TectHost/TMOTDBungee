@@ -20,6 +20,7 @@ messages:
   motd_set_usage: "&cUsage: /motd set <line1> <line2> - Sets the MOTD."
   motd_reload: "&aConfiguration reloaded correctly."
   no_permission_msg: "&cYou do not have permission to use this command."
+  plugin_version_msg: "&5TMOTD &e> &7Version: &a%version%"
 options:
   show_player_count: true
   player_count: 100
