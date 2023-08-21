@@ -27,10 +27,6 @@ public class TMOTD extends Plugin {
     private String motdReloadMsg;
     private String noPermissionMsg;
     private String pluginVersionMsg;
-    private boolean showPlayerCount;
-    private int playerCount;
-    private boolean showExtraPlayerCount;
-    private int extraPlayerCount;
 
     @Override
     public void onEnable() {
@@ -91,12 +87,6 @@ public class TMOTD extends Plugin {
             motdReloadMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("messages.motd_reload"));
             noPermissionMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("messages.no_permission_msg"));
             pluginVersionMsg = ChatColor.translateAlternateColorCodes('&', configuration.getString("messages.plugin_version_msg"));
-
-            // Opciones para personalizar el número de jugadores en la lista de servidores
-            showPlayerCount = configuration.getBoolean("options.show_player_count", true);
-            playerCount = configuration.getInt("options.player_count", 100);
-            showExtraPlayerCount = configuration.getBoolean("options.show_extra_player_count", true);
-            extraPlayerCount = configuration.getInt("options.extra_player_count", 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -179,22 +169,5 @@ public class TMOTD extends Plugin {
 
     public String getPluginVersionMsg() {
         return pluginVersionMsg;
-    }
-
-    // Opciones para personalizar el número de jugadores en la lista de servidores
-    public boolean isShowPlayerCount() {
-        return showPlayerCount;
-    }
-
-    public int getPlayerCount() {
-        return playerCount;
-    }
-
-    public boolean isShowExtraPlayerCount() {
-        return showExtraPlayerCount;
-    }
-
-    public int getExtraPlayerCount() {
-        return extraPlayerCount;
     }
 }

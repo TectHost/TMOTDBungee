@@ -39,8 +39,18 @@ public class MOTDCommand extends Command {
                 }
                 plugin.loadConfig(); // Vuelve a cargar la configuración en el plugin
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMotdReloadMsg())); // Enviar mensaje personalizado
-            } else if (args[0].equalsIgnoreCase("version")) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getPluginVersionMsg())); // Enviar mensaje de versión
+            }else if (args[0].equalsIgnoreCase("version")) {
+                if (!sender.hasPermission("tmotd.version")) {
+                    sender.sendMessage(ChatColor.RED + plugin.getNoPermissionMsg());
+                    return;
+                }
+                
+                String pluginVersionMsg = ChatColor.translateAlternateColorCodes('&', plugin.getPluginVersionMsg());
+                
+                // Reemplazar %version% con la versión real del plugin
+                pluginVersionMsg = pluginVersionMsg.replace("%version%", plugin.getDescription().getVersion());
+                
+                sender.sendMessage(pluginVersionMsg);
             } else {
                 // Mostrar el uso correcto del comando
                 sender.sendMessage(ChatColor.RED + "Uso:");
